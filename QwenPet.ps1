@@ -401,7 +401,7 @@ function New-MarkBrush {
 }
 function Initialize-Blossom {
     $angles = @(270, 30, 150)
-    $rotd = @(0, 120, 240)
+    $rotd = @(-18, 22, -6)
     for ($i = 0; $i -lt 3; $i++) {
         $a = $angles[$i] * [Math]::PI / 180.0
         $px = 120 + [Math]::Cos($a) * 62
@@ -419,13 +419,13 @@ $script:Orbit = New-Object System.Collections.ArrayList
 # 通义千问图标上那三个白色块: 放在闪光层(这一层在身体前面), 不参与环绕动画所以静止
 function Initialize-Orbit {
     $angles = @(270, 30, 150)
-    $rotd = @(0, 120, 240)
+    $rotd = @(-18, 22, -6)
     for ($i = 0; $i -lt 3; $i++) {
         $a = $angles[$i] * [Math]::PI / 180.0
-        $px = 120 + [Math]::Cos($a) * 60
-        $py = 122 + [Math]::Sin($a) * 60
+        $px = 120 + [Math]::Cos($a) * 56
+        $py = 122 + [Math]::Sin($a) * 56
         $p = New-Object System.Windows.Shapes.Path
-        $p.Data = [System.Windows.Media.Geometry]::Parse((New-SquircleData -CX $px -CY $py -Size 44 -R 14 -Rot $rotd[$i]))
+        $p.Data = [System.Windows.Media.Geometry]::Parse((New-SquircleData -CX $px -CY $py -Size 54 -R 17 -Rot $rotd[$i]))
         $p.Fill = New-LinBrush -colors @('#FFFFFFFF', '#FFE9EFFF') -offsets @(0, 1)
         $p.IsHitTestVisible = $false
         [void]$OrbitLayer.Children.Add($p)

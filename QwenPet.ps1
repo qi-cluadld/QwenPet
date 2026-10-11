@@ -377,14 +377,14 @@ function New-MarkBrush {
 
 # 十二道等宽圆头射线: 和中间的圆盘合起来就是 通义千问 星号(整只就是标志轮廓)
 # 局部坐标: (0,0) = 宠物中心; 齿从半径 26 长到 94, 所以转起来是绕中心
-$script:PetalData = 'M 0,-24 C -7,-38 -12,-58 -12,-72 C -12,-84 -7,-90 0,-92 C 7,-90 12,-84 12,-72 C 12,-58 7,-38 0,-24 Z'
+$script:PetalData = 'M 0,-10 C 16,-22 30,-46 32,-74 C 18,-56 8,-30 0,-10 Z'
 function Initialize-Blossom {
     for ($i = 0; $i -lt 6; $i++) {
         $p = New-Object System.Windows.Shapes.Path
         $p.Data = [System.Windows.Media.Geometry]::Parse($script:PetalData)
         $p.Fill = New-MarkBrush
         $p.RenderTransformOrigin = New-Object System.Windows.Point(0, 0)
-        $p.RenderTransform = New-Object System.Windows.Media.RotateTransform($i * 60)
+        $p.RenderTransform = New-Object System.Windows.Media.RotateTransform($i * 60 + 24)
         $p.IsHitTestVisible = $false
         [System.Windows.Controls.Canvas]::SetLeft($p, $script:CenterX)
         [System.Windows.Controls.Canvas]::SetTop($p, $script:CenterY)

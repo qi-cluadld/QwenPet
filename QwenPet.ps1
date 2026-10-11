@@ -146,7 +146,29 @@ $script:CrestX = 120.0
 $script:CrestY = 72.0
 $script:CenterY = 122.0
 # 核心:六边形(尖朝上),圆角较大,像一个软软的坐垫
-$script:BodyData = New-RoundPolyData -R 40 -N 12 -Round 0.55 -Phase ([Math]::PI / 2)
+# 回旋风车轮廓: 6 片连续曲面的叶片(内圈 40, 外尖 92, 每片扫过 36 度), 中间一块能放脸
+function New-SwirlData {
+    param([double]$CX = 120, [double]$CY = 122, [int]$N = 6, [double]$Ri = 40, [double]$Ro = 92, [double]$Sweep = 52)
+    $sb = New-Object System.Text.StringBuilder
+    for ($k = 0; $k -lt $N; $k++) {
+        $a0 = 2 * [Math]::PI * $k / $N
+        $a1 = $a0 + $Sweep * [Math]::PI / 180.0
+        $a2 = 2 * [Math]::PI * ($k + 1) / $N
+        $p0x = $CX + [Math]::Cos($a0) * $Ri; $p0y = $CY + [Math]::Sin($a0) * $Ri
+        $p1x = $CX + [Math]::Cos($a1) * $Ro; $p1y = $CY + [Math]::Sin($a1) * $Ro
+        $p2x = $CX + [Math]::Cos($a2) * $Ri; $p2y = $CY + [Math]::Sin($a2) * $Ri
+        $m1 = $a0 + ($a1 - $a0) * 0.55
+        $c1x = $CX + [Math]::Cos($m1) * $Ro * 0.60; $c1y = $CY + [Math]::Sin($m1) * $Ro * 0.70
+        $m2 = $a1 + ($a2 - $a1) * 0.30
+        $c2x = $CX + [Math]::Cos($m2) * $Ro * 0.88; $c2y = $CY + [Math]::Sin($m2) * $Ro * 0.80
+        if ($k -eq 0) { [void]$sb.Append(('M {0:0.##},{1:0.##} ' -f $p0x, $p0y)) }
+        [void]$sb.Append(('Q {0:0.##},{1:0.##} {2:0.##},{3:0.##} ' -f $c1x, $c1y, $p1x, $p1y))
+        [void]$sb.Append(('Q {0:0.##},{1:0.##} {2:0.##},{3:0.##} ' -f $c2x, $c2y, $p2x, $p2y))
+    }
+    [void]$sb.Append('Z')
+    return $sb.ToString()
+}
+$script:BodyData = New-SwirlData
 # 星芒(6 片):圆角长条,围着核心转一圈
 $script:ArmLen = 58.0
 $script:ArmThick = 17.0
@@ -379,7 +401,7 @@ function New-MarkBrush {
 # 局部坐标: (0,0) = 宠物中心; 齿从半径 26 长到 94, 所以转起来是绕中心
 $script:PetalData = 'M 0,-10 C 16,-22 30,-46 32,-74 C 18,-56 8,-30 0,-10 Z'
 function Initialize-Blossom {
-    for ($i = 0; $i -lt 6; $i++) {
+    for ($i = 0; $i -lt 0; $i++) {
         $p = New-Object System.Windows.Shapes.Path
         $p.Data = [System.Windows.Media.Geometry]::Parse($script:PetalData)
         $p.Fill = New-MarkBrush

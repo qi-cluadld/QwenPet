@@ -30,7 +30,7 @@ $xaml = @'
         <Ellipse.Fill>
           <RadialGradientBrush>
             <GradientStop Color="#59F3B79C" Offset="0.30"/>
-            <GradientStop Color="#2E7C5CFF" Offset="0.68"/>
+            <GradientStop Color="#2E3D5AFE" Offset="0.68"/>
             <GradientStop Color="#00BD5D3A" Offset="1"/>
           </RadialGradientBrush>
         </Ellipse.Fill>
@@ -41,13 +41,13 @@ $xaml = @'
       <Path x:Name="Body" Data="{BODY}" IsHitTestVisible="True">
         <Path.Fill>
           <RadialGradientBrush MappingMode="Absolute" Center="120,92" GradientOrigin="120,92" RadiusX="152" RadiusY="152">
-            <GradientStop Color="#FFCFC6FF" Offset="0"/>
-            <GradientStop Color="#FF8E7BFF" Offset="0.45"/>
-            <GradientStop Color="#FF6F5BE8" Offset="1"/>
+            <GradientStop Color="#FFBFD0FF" Offset="0"/>
+            <GradientStop Color="#FF6D8BFF" Offset="0.45"/>
+            <GradientStop Color="#FF2B4BE0" Offset="1"/>
           </RadialGradientBrush>
         </Path.Fill>
         <Path.Effect>
-          <DropShadowEffect Color="#7A1E1747" BlurRadius="16" ShadowDepth="5" Direction="270" Opacity="0.5"/>
+          <DropShadowEffect Color="#7A101B45" BlurRadius="16" ShadowDepth="5" Direction="270" Opacity="0.5"/>
         </Path.Effect>
       </Path>
 
@@ -72,16 +72,16 @@ $xaml = @'
         <Ellipse Width="24" Height="27" Canvas.Left="92" Canvas.Top="100.5">
           <Ellipse.Fill>
             <LinearGradientBrush StartPoint="0.2,0" EndPoint="0.8,1">
-              <GradientStop Color="#FF2A2060" Offset="0"/>
-              <GradientStop Color="#FF181040" Offset="1"/>
+              <GradientStop Color="#FF1B2A63" Offset="0"/>
+              <GradientStop Color="#FF101B45" Offset="1"/>
             </LinearGradientBrush>
           </Ellipse.Fill>
         </Ellipse>
         <Ellipse Width="24" Height="27" Canvas.Left="124" Canvas.Top="100.5">
           <Ellipse.Fill>
             <LinearGradientBrush StartPoint="0.2,0" EndPoint="0.8,1">
-              <GradientStop Color="#FF2A2060" Offset="0"/>
-              <GradientStop Color="#FF181040" Offset="1"/>
+              <GradientStop Color="#FF1B2A63" Offset="0"/>
+              <GradientStop Color="#FF101B45" Offset="1"/>
             </LinearGradientBrush>
           </Ellipse.Fill>
         </Ellipse>
@@ -93,13 +93,13 @@ $xaml = @'
 
       <!-- 眼睛(笑成弯月) -->
       <Canvas x:Name="EyeHappy" Width="240" Height="240" Visibility="Collapsed" IsHitTestVisible="False">
-        <Path Data="M -11,3 Q 0,-9 11,3" Stroke="#FF181040" StrokeThickness="4"
+        <Path Data="M -11,3 Q 0,-9 11,3" Stroke="#FF101B45" StrokeThickness="4"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round">
           <Path.RenderTransform>
             <TranslateTransform X="104" Y="115"/>
           </Path.RenderTransform>
         </Path>
-        <Path Data="M -11,3 Q 0,-9 11,3" Stroke="#FF181040" StrokeThickness="4"
+        <Path Data="M -11,3 Q 0,-9 11,3" Stroke="#FF101B45" StrokeThickness="4"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round">
           <Path.RenderTransform>
             <TranslateTransform X="136" Y="115"/>
@@ -109,19 +109,19 @@ $xaml = @'
 
       <!-- 嘴 -->
       <Canvas x:Name="Mouth" Width="240" Height="240" IsHitTestVisible="False">
-        <Path x:Name="MouthSmile" Data="M -9,0 Q 0,9 9,0" Stroke="#FF181040" StrokeThickness="3.2"
+        <Path x:Name="MouthSmile" Data="M -9,0 Q 0,9 9,0" Stroke="#FF101B45" StrokeThickness="3.2"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round">
           <Path.RenderTransform>
             <TranslateTransform X="120" Y="138"/>
           </Path.RenderTransform>
         </Path>
-        <Path x:Name="MouthFlat" Data="M -7,0 L 7,0" Stroke="#FF181040" StrokeThickness="3.2"
+        <Path x:Name="MouthFlat" Data="M -7,0 L 7,0" Stroke="#FF101B45" StrokeThickness="3.2"
               StrokeStartLineCap="Round" StrokeEndLineCap="Round" Visibility="Collapsed">
           <Path.RenderTransform>
             <TranslateTransform X="120" Y="139"/>
           </Path.RenderTransform>
         </Path>
-        <Ellipse x:Name="MouthOpen" Width="12" Height="14" Canvas.Left="114" Canvas.Top="131" Fill="#FF181040" Visibility="Collapsed"/>
+        <Ellipse x:Name="MouthOpen" Width="12" Height="14" Canvas.Left="114" Canvas.Top="131" Fill="#FF101B45" Visibility="Collapsed"/>
       </Canvas>
 
       <!-- 腮红 -->
@@ -129,16 +129,16 @@ $xaml = @'
         <Ellipse Width="24" Height="12" Canvas.Left="73" Canvas.Top="120">
           <Ellipse.Fill>
             <RadialGradientBrush>
-              <GradientStop Color="#FFFFA8D8" Offset="0"/>
-              <GradientStop Color="#00FFA8D8" Offset="1"/>
+              <GradientStop Color="#FFFFA8C8" Offset="0"/>
+              <GradientStop Color="#00FFA8C8" Offset="1"/>
             </RadialGradientBrush>
           </Ellipse.Fill>
         </Ellipse>
         <Ellipse Width="24" Height="12" Canvas.Left="143" Canvas.Top="120">
           <Ellipse.Fill>
             <RadialGradientBrush>
-              <GradientStop Color="#FFFFA8D8" Offset="0"/>
-              <GradientStop Color="#00FFA8D8" Offset="1"/>
+              <GradientStop Color="#FFFFA8C8" Offset="0"/>
+              <GradientStop Color="#00FFA8C8" Offset="1"/>
             </RadialGradientBrush>
           </Ellipse.Fill>
         </Ellipse>
@@ -153,24 +153,24 @@ $xaml = @'
         </Path>
         <Border Canvas.Left="136" Canvas.Top="16" Width="64" Height="38" CornerRadius="14" Background="#F2FFFFFF">
           <Border.Effect>
-            <DropShadowEffect Color="#4D1E1747" BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.4"/>
+            <DropShadowEffect Color="#4D101B45" BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.4"/>
           </Border.Effect>
         </Border>
-        <Ellipse x:Name="Dot1" Width="9" Height="9" Canvas.Left="147" Canvas.Top="30" Fill="#FF7C5CFF"/>
-        <Ellipse x:Name="Dot2" Width="9" Height="9" Canvas.Left="162" Canvas.Top="30" Fill="#FF7C5CFF"/>
-        <Ellipse x:Name="Dot3" Width="9" Height="9" Canvas.Left="177" Canvas.Top="30" Fill="#FF7C5CFF"/>
+        <Ellipse x:Name="Dot1" Width="9" Height="9" Canvas.Left="147" Canvas.Top="30" Fill="#FF3D5AFE"/>
+        <Ellipse x:Name="Dot2" Width="9" Height="9" Canvas.Left="162" Canvas.Top="30" Fill="#FF3D5AFE"/>
+        <Ellipse x:Name="Dot3" Width="9" Height="9" Canvas.Left="177" Canvas.Top="30" Fill="#FF3D5AFE"/>
       </Canvas>
     </Canvas>
   </Canvas>
 
   <!-- 说话气泡(放在 PetWrap 之外, 所以不会跟着宠物一起旋转) -->
   <Border x:Name="SayBubble" Canvas.Left="16" Canvas.Top="2" MaxWidth="208" CornerRadius="14"
-          Background="#F2FFFFFF" BorderBrush="#4D7C5CFF" BorderThickness="1.2" Padding="10,6"
+          Background="#F2FFFFFF" BorderBrush="#4D3D5AFE" BorderThickness="1.2" Padding="10,6"
           Visibility="Collapsed" IsHitTestVisible="False">
     <Border.Effect>
-      <DropShadowEffect Color="#4D1E1747" BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.45"/>
+      <DropShadowEffect Color="#4D101B45" BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.45"/>
     </Border.Effect>
-    <TextBlock x:Name="SayText" FontFamily="Microsoft YaHei UI" FontSize="14" Foreground="#FF221A52" TextWrapping="Wrap"/>
+    <TextBlock x:Name="SayText" FontFamily="Microsoft YaHei UI" FontSize="14" Foreground="#FF162255" TextWrapping="Wrap"/>
   </Border>
   <Canvas x:Name="OrbitLayer" Width="240" Height="240" IsHitTestVisible="False"/>
   <Canvas x:Name="ParticleLayer" Width="240" Height="240" IsHitTestVisible="False"/>

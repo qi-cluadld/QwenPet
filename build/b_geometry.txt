@@ -43,29 +43,34 @@ $script:CrestX = 120.0
 $script:CrestY = 72.0
 $script:CenterY = 122.0
 # 核心:六边形(尖朝上),圆角较大,像一个软软的坐垫
-# 回旋风车轮廓: 6 片连续曲面的叶片(内圈 40, 外尖 92, 每片扫过 36 度), 中间一块能放脸
-function New-SwirlData {
-    param([double]$CX = 120, [double]$CY = 122, [int]$N = 6, [double]$Ri = 40, [double]$Ro = 92, [double]$Sweep = 52)
-    $sb = New-Object System.Text.StringBuilder
-    for ($k = 0; $k -lt $N; $k++) {
-        $a0 = 2 * [Math]::PI * $k / $N
-        $a1 = $a0 + $Sweep * [Math]::PI / 180.0
-        $a2 = 2 * [Math]::PI * ($k + 1) / $N
-        $p0x = $CX + [Math]::Cos($a0) * $Ri; $p0y = $CY + [Math]::Sin($a0) * $Ri
-        $p1x = $CX + [Math]::Cos($a1) * $Ro; $p1y = $CY + [Math]::Sin($a1) * $Ro
-        $p2x = $CX + [Math]::Cos($a2) * $Ri; $p2y = $CY + [Math]::Sin($a2) * $Ri
-        $m1 = $a0 + ($a1 - $a0) * 0.55
-        $c1x = $CX + [Math]::Cos($m1) * $Ro * 0.60; $c1y = $CY + [Math]::Sin($m1) * $Ro * 0.70
-        $m2 = $a1 + ($a2 - $a1) * 0.30
-        $c2x = $CX + [Math]::Cos($m2) * $Ro * 0.88; $c2y = $CY + [Math]::Sin($m2) * $Ro * 0.80
-        if ($k -eq 0) { [void]$sb.Append(('M {0:0.##},{1:0.##} ' -f $p0x, $p0y)) }
-        [void]$sb.Append(('Q {0:0.##},{1:0.##} {2:0.##},{3:0.##} ' -f $c1x, $c1y, $p1x, $p1y))
-        [void]$sb.Append(('Q {0:0.##},{1:0.##} {2:0.##},{3:0.##} ' -f $c2x, $c2y, $p2x, $p2y))
+# 通义千问图标 = 蓝色圆角方块 + 三个白色旋转块; 这里生成圆角方块(可旋转)
+function New-SquircleData {
+    param([double]$CX = 120, [double]$CY = 122, [double]$Size = 104, [double]$R = 32, [double]$Rot = -10)
+    $h = $Size / 2
+    $pts = @(
+        @((- $h + $R), (- $h)), @(($h - $R), (- $h)), @($h, (- $h + $R)), @($h, ($h - $R)),
+        @(($h - $R), $h), @((- $h + $R), $h), @((- $h), ($h - $R)), @((- $h), (- $h + $R))
+    )
+    $rad = $Rot * [Math]::PI / 180.0
+    $co = [Math]::Cos($rad); $si = [Math]::Sin($rad)
+    $abs = @()
+    foreach ($p in $pts) {
+        $x = $p[0] * $co - $p[1] * $si
+        $y = $p[0] * $si + $p[1] * $co
+        $abs += , @(($CX + $x), ($CY + $y))
     }
-    [void]$sb.Append('Z')
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.Append(('M {0:0.##},{1:0.##} L {2:0.##},{3:0.##} ' -f $abs[0][0], $abs[0][1], $abs[1][0], $abs[1][1]))
+    foreach ($k in 2, 4, 6) {
+        [void]$sb.Append(('A {0:0.##},{0:0.##} 0 0 1 {1:0.##},{2:0.##} ' -f $R, $abs[$k][0], $abs[$k][1]))
+        $nx = $k + 1
+        [void]$sb.Append(('L {0:0.##},{1:0.##} ' -f $abs[$nx][0], $abs[$nx][1]))
+    }
+    [void]$sb.Append(('A {0:0.##},{0:0.##} 0 0 1 {1:0.##},{2:0.##} Z' -f $R, $abs[0][0], $abs[0][1]))
     return $sb.ToString()
 }
-$script:BodyData = New-SwirlData
+# 身体 = 蓝色圆角方块(占据窗口大部分)
+$script:BodyData = New-SquircleData -CX 120 -CY 122 -Size 156 -R 44 -Rot 0
 # 星芒(6 片):圆角长条,围着核心转一圈
 $script:ArmLen = 58.0
 $script:ArmThick = 17.0

@@ -1,34 +1,28 @@
 # 统一的陶土橙渐变(绝对坐标, 让 12 片星芒共用同一束光)
+# 三个白色旋转块(用同一个方块生成器): 一块在上, 两块在下
 function New-MarkBrush {
-    $b = New-Object System.Windows.Media.RadialGradientBrush
-    $b.MappingMode = [System.Windows.Media.BrushMappingMode]::Absolute
-    $b.Center = New-Object System.Windows.Point(120, 92)
-    $b.GradientOrigin = New-Object System.Windows.Point(120, 92)
-    $b.RadiusX = 152; $b.RadiusY = 152
-    [void]$b.GradientStops.Add((New-Gs '#FFEDE9FF' 0))
-    [void]$b.GradientStops.Add((New-Gs '#FF8E7BFF' 0.45))
-    [void]$b.GradientStops.Add((New-Gs '#FF6F5BE8' 1))
+    $b = New-Object System.Windows.Media.LinearGradientBrush
+    $b.StartPoint = New-Object System.Windows.Point(0, 0)
+    $b.EndPoint = New-Object System.Windows.Point(0.6, 1)
+    [void]$b.GradientStops.Add((New-Gs '#FFFFFFFF' 0))
+    [void]$b.GradientStops.Add((New-Gs '#FFEDF2FF' 1))
     return $b
 }
-
-# 十二道等宽圆头射线: 和中间的圆盘合起来就是 通义千问 星号(整只就是标志轮廓)
-# 局部坐标: (0,0) = 宠物中心; 齿从半径 26 长到 94, 所以转起来是绕中心
-$script:PetalData = 'M 0,-10 C 16,-22 30,-46 32,-74 C 18,-56 8,-30 0,-10 Z'
 function Initialize-Blossom {
-    for ($i = 0; $i -lt 0; $i++) {
+    $angles = @(270, 30, 150)
+    $rotd = @(0, 120, 240)
+    for ($i = 0; $i -lt 3; $i++) {
+        $a = $angles[$i] * [Math]::PI / 180.0
+        $px = 120 + [Math]::Cos($a) * 62
+        $py = 122 + [Math]::Sin($a) * 62
         $p = New-Object System.Windows.Shapes.Path
-        $p.Data = [System.Windows.Media.Geometry]::Parse($script:PetalData)
+        $p.Data = [System.Windows.Media.Geometry]::Parse((New-SquircleData -CX $px -CY $py -Size 42 -R 13 -Rot $rotd[$i]))
         $p.Fill = New-MarkBrush
-        $p.RenderTransformOrigin = New-Object System.Windows.Point(0, 0)
-        $p.RenderTransform = New-Object System.Windows.Media.RotateTransform($i * 60 + 24)
         $p.IsHitTestVisible = $false
-        [System.Windows.Controls.Canvas]::SetLeft($p, $script:CenterX)
-        [System.Windows.Controls.Canvas]::SetTop($p, $script:CenterY)
         [void]$BlossomLayer.Children.Add($p)
     }
 }
 Initialize-Blossom
-
 # 身边飘的三颗小闪光
 $script:Orbit = New-Object System.Collections.ArrayList
 function Initialize-Orbit {
@@ -36,7 +30,7 @@ function Initialize-Orbit {
     foreach ($phase in @(0.6, 2.7, 4.8)) {
         $p = New-Object System.Windows.Shapes.Path
         $p.Data = [System.Windows.Media.Geometry]::Parse($script:SparkData)
-        $p.Fill = New-LinBrush -colors @('#F2FFFFFF', '#FFDDD6FF') -offsets @(0, 1)
+        $p.Fill = New-LinBrush -colors @('#F2FFFFFF', '#FFD6E1FF') -offsets @(0, 1)
         $p.RenderTransformOrigin = New-Object System.Windows.Point(0, 0)
         $rt = New-Object System.Windows.Media.RotateTransform(0)
         $p.RenderTransform = $rt

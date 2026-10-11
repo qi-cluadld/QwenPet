@@ -25,24 +25,19 @@ function Initialize-Blossom {
 Initialize-Blossom
 # 身边飘的三颗小闪光
 $script:Orbit = New-Object System.Collections.ArrayList
+# 通义千问图标上那三个白色块: 放在闪光层(这一层在身体前面), 不参与环绕动画所以静止
 function Initialize-Orbit {
-    $i = 0
-    foreach ($phase in @(0.6, 2.7, 4.8)) {
+    $angles = @(270, 30, 150)
+    $rotd = @(0, 120, 240)
+    for ($i = 0; $i -lt 3; $i++) {
+        $a = $angles[$i] * [Math]::PI / 180.0
+        $px = 120 + [Math]::Cos($a) * 60
+        $py = 122 + [Math]::Sin($a) * 60
         $p = New-Object System.Windows.Shapes.Path
-        $p.Data = [System.Windows.Media.Geometry]::Parse($script:SparkData)
-        $p.Fill = New-LinBrush -colors @('#F2FFFFFF', '#FFD6E1FF') -offsets @(0, 1)
-        $p.RenderTransformOrigin = New-Object System.Windows.Point(0, 0)
-        $rt = New-Object System.Windows.Media.RotateTransform(0)
-        $p.RenderTransform = $rt
+        $p.Data = [System.Windows.Media.Geometry]::Parse((New-SquircleData -CX $px -CY $py -Size 44 -R 14 -Rot $rotd[$i]))
+        $p.Fill = New-LinBrush -colors @('#FFFFFFFF', '#FFE9EFFF') -offsets @(0, 1)
         $p.IsHitTestVisible = $false
         [void]$OrbitLayer.Children.Add($p)
-        [void]$script:Orbit.Add(@{
-                El = $p; Rot = $rt; Phase = $phase
-                Speed = 0.30 + 0.06 * $i
-                Radius = 92.0 + 8.0 * $i
-            })
-        $i++
     }
 }
 Initialize-Orbit
-
